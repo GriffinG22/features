@@ -22,8 +22,61 @@ class ArrayOfAnything<T> {
   }
 }
 
-const tester = new ArrayOfAnything(["a", "b", "c"]);
+const tester = new ArrayOfAnything<string>(["a", "b", "c"]);
 
 const shouldBeC = tester.get(2);
 
 console.log(shouldBeC);
+
+//Functions
+
+function printStrings(arr: string[]): void {
+  for (let i = 0; i < arr.length; i++) {
+    console.log(arr[i]);
+  }
+}
+
+function printNumbers(arr: number[]): void {
+  for (let i = 0; i < arr.length; i++) {
+    console.log(arr[i]);
+  }
+}
+
+function printAnything<T>(arr: T[]): void {
+  for (let i = 0; i < arr.length; i++) {
+    console.log(arr[i]);
+  }
+}
+
+printAnything<string>(["a", "b", "c"]);
+
+//Generic Constraints
+
+class Car {
+  print() {
+    console.log("I am a car");
+  }
+}
+
+class House {
+  print() {
+    console.log("I am a house");
+  }
+}
+
+interface Printable {
+  print(): void;
+}
+
+function printHousesOrCars<T extends Printable>(arr: T[]): void {
+  for (let i = 0; i < arr.length; i++) {
+    arr[i].print();
+  }
+}
+
+const carOne = new Car();
+const carTwo = new Car();
+const houseOne = new House();
+const carThree = new Car();
+
+printHousesOrCars<House | Car>([carOne, carTwo, houseOne, carThree]);
